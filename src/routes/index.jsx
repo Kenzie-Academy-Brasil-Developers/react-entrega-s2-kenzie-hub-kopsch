@@ -1,16 +1,12 @@
 import { Route, Switch } from "react-router-dom";
-import Dashboard from "../pages/Dashboard";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
-import Welcome from "../pages/Welcome";
+import Dashboard from "../pages/Dashboard";
 
 const Routes = () => {
   return (
     <Switch>
       <Route exact path="/">
-        <Welcome />
-      </Route>
-      <Route path="/register">
         <Register />
       </Route>
       <Route path="/login">
