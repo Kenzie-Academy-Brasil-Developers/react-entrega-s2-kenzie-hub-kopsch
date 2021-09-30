@@ -26,7 +26,7 @@ const Dashboard = ({ authenticated }) => {
   const name = JSON.parse(localStorage.getItem("@Tech:name"));
 
   const [showComponent, setShowComponent] = useState(false);
-  const [infoTech, setInfoTech] = useState([{}]);
+  const [infoTech, setInfoTech] = useState([]);
 
   const useStyles = makeStyles({
     input: {
@@ -34,23 +34,23 @@ const Dashboard = ({ authenticated }) => {
     },
   });
 
-  const loadTechs = () => {
-    api
-      .get("/profile", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((response) => setInfoTech(response.data.techs))
-      .catch((_) => toast.error("Algo deu errado."));
-  };
-
   const schema = yup.object().shape({
     title: yup.string().required("Campo obrigatório"),
     status: yup.string().required("Campo obrigatório"),
   });
 
-  useEffect(() => loadTechs(), [infoTech]);
+  useEffect(() => {
+    if (token) {
+      api
+        .get("/profile", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((response) => setInfoTech(response.data.techs))
+        .catch((_) => toast.error("Algo deu errado."));
+    }
+  }, [infoTech]);
 
   const {
     register,
@@ -63,6 +63,7 @@ const Dashboard = ({ authenticated }) => {
   const classes = useStyles();
 
   const handleTech = (data) => {
+    console.log(data);
     api
       .post("/users/techs", data, {
         headers: {
@@ -94,10 +95,10 @@ const Dashboard = ({ authenticated }) => {
           <TechDesc>Add Tech</TechDesc>
         </TechAdd>
         {infoTech.map((tech, index) => {
-          const { title, status } = tech;
+          const { title, status, id } = tech;
           return (
             <CardTech key={index}>
-              <TechCard title={title} status={status} />
+              <TechCard id={id} token={token} title={title} status={status} />
             </CardTech>
           );
         })}
@@ -125,7 +126,7 @@ const Dashboard = ({ authenticated }) => {
           <Button
             variant="outlined"
             type="submit"
-            onClick={() => setTimeout(() => setShowComponent(false), 0)}
+            onClick={() => setTimeout(() => setShowComponent(false), 100)}
           >
             Criar Tech
           </Button>
