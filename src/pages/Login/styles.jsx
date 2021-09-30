@@ -12,12 +12,12 @@ export const StyledForm = styled.form`
   align-items: center;
   justify-content: center;
   flex-flow: column nowrap;
-  border-radius: 20px;
+  border-radius: 10px;
   background: #fff;
   height: 350px;
-  box-shadow: rgba(255, 255, 255, 0.4) 5px 5px,
-    rgba(255, 255, 255, 0.3) 10px 10px, rgba(255, 255, 255, 0.2) 15px 15px,
-    rgba(255, 255, 255, 0.1) 20px 20px, rgba(255, 255, 255, 0.05) 25px 25px;
+  box-shadow: 0px 0px 40px 10px rgba(0, 0, 0, 0.3);
+  -webkit-box-shadow: 0px 0px 40px 10px rgba(0, 0, 0, 0.3);
+  -moz-box-shadow: 0px 0px 40px 10px rgba(0, 0, 0, 0.3);
 `;
 
 export const StyledSelect = styled.select`
@@ -38,6 +38,9 @@ export const DivForm = styled.div`
   width: 50%;
   height: 100%;
   background: #007aff;
+  @media (max-width: 639px) {
+    width: 100%;
+  }
 `;
 
 export const DivLogo = styled.div`
@@ -46,6 +49,9 @@ export const DivLogo = styled.div`
   justify-content: center;
   width: 50%;
   height: 100%;
+  @media (max-width: 639px) {
+    display: none;
+  }
 `;
 
 export const Image = styled.img`
@@ -55,10 +61,13 @@ export const Image = styled.img`
 export const HaveLogin = styled.span`
   color: #007aff;
   font-size: 0.7rem;
-  align-self: flex-end;
-  margin-right: 15px;
 `;
 
 export const TextLink = styled.span`
   color: #0c0c5f;
+`;
+
+export const ComponentAdd = styled.div`
+  width: 300px;
+  height: 300px;
 `;

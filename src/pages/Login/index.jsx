@@ -12,11 +12,11 @@ import {
   DivLogin,
 } from "./styles";
 import logo from "../../assets/img/kenzie.svg";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useHistory, Redirect } from "react-router-dom";
 import api from "../../services/api";
 import { toast } from "react-toastify";
 
-const Login = () => {
+const Login = ({ authenticated, setAuthenticated }) => {
   const history = useHistory();
 
   const useStyles = makeStyles({
@@ -52,10 +52,19 @@ const Login = () => {
     api
       .post("/sessions", user)
       .then((response) => {
-        console.log(response.data);
+        const { token } = response.data;
+        const { name } = response.data.user;
+        localStorage.setItem("@Tech:token", JSON.stringify(token));
+        localStorage.setItem("@Tech:name", JSON.stringify(name));
+        setAuthenticated(true);
+        return history.push("/dashboard");
       })
       .catch((_) => toast.error("Senha ou e-mail incorretos."));
   };
+
+  if (authenticated) {
+    return <Redirect to="/dashboard" />;
+  }
 
   return (
     <DivLogin>

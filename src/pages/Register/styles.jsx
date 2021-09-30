@@ -39,6 +39,9 @@ export const DivUser = styled.div`
   width: 50%;
   height: 100%;
   background: #4343ff;
+  @media (max-width: 639px) {
+    width: 100%;
+  }
 `;
 
 export const DivLogo = styled.div`
@@ -47,6 +50,9 @@ export const DivLogo = styled.div`
   justify-content: center;
   width: 50%;
   height: 100%;
+  @media (max-width: 639px) {
+    display: none;
+  }
 `;
 
 export const Image = styled.img`

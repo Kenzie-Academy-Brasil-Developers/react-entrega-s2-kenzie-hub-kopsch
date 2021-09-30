@@ -13,11 +13,11 @@ import {
   DivRegister,
 } from "./styles";
 import logo from "../../assets/img/kenzie.svg";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useHistory, Redirect } from "react-router-dom";
 import api from "../../services/api";
 import { toast } from "react-toastify";
 
-const Register = () => {
+const Register = ({ authenticated }) => {
   const history = useHistory();
 
   const useStyles = makeStyles({
@@ -36,7 +36,10 @@ const Register = () => {
   const classes = useStyles();
 
   const schema = yup.object().shape({
-    name: yup.string().required("Campo obrigatório"),
+    name: yup
+      .string()
+      .required("Campo obrigatório")
+      .max(12, "Máximo de doze caracteres"),
     email: yup.string().required("Campo obrigatório").email("Formato inválido"),
     course_module: yup.string().ensure().required("Campo obrigatório"),
     bio: yup.string().required("Campo obrigatório"),
@@ -45,7 +48,7 @@ const Register = () => {
       .string()
       .required("Senha obrigatória")
       .matches(
-        "^(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})",
+        "^(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{6,})",
         "A senha precisa no mínimo de um número e um símbolo"
       ),
   });
@@ -88,6 +91,10 @@ const Register = () => {
       })
       .catch((_) => toast.error("Erro ao criar a conta. Use outro e-mail."));
   };
+
+  if (authenticated) {
+    return <Redirect to="/dashboard" />;
+  }
 
   return (
     <DivRegister>
